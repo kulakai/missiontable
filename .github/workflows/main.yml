@@ -23,7 +23,10 @@ jobs:
 
     # specify the environment variables used by the packager, matching the secrets from the project on GitHub
     env:
-      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}  # "GITHUB_TOKEN" is a secret always provided to the workflow
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+      WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
+      GITHUB_OAUTH: ${{ secrets.BUILD_TOKEN }}  # "GITHUB_TOKEN" is a secret always provided to the workflow
                                                  # for your own token, the name cannot start with "GITHUB_"
 
     # "steps" holds a list of all the steps needed to package and release our AddOn
@@ -37,10 +40,6 @@ jobs:
       # once cloned, we just run the GitHub Action for the packager project
       - name: Package and release
         uses: BigWigsMods/packager@v1
-
-      # another example where we supply additional arguments, this example is specifically to release
-      # for the Burning Crusade Classic version of the game and doesn't upload to WoWInterface
-      - name: Package and release for Burning Crusade Classic
-        uses: BigWigsMods/packager@v1
         with:
-          args: -g bcc -w 0
+          args: -g 9.1.0 -p 0 -w 0 -a 0
+
